@@ -16,10 +16,22 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/', (req, res) => {
+    const { id } = req.params;
+    Projects.getProjectById(id)
+        .then((project) => {
+            res.status(201).json({ project })
+        })
+        .catch((error) => {
+            console.error(error.message);
+            res.status(500).json({ message: 'Projects could not be retrieved' });
+        });
+});
+
 router.post('/', (req, res) => {
     Projects.createProject(req.body)
-        .then((ids) => {
-            res.status(201).json({ id: ids[0] })
+        .then((project) => {
+            res.status(201).json(project)
         })
         .catch((error) => {
             console.error(error.message);
@@ -42,8 +54,8 @@ router.get('/resources', (req, res) => {
 
 router.post('/resources', (req, res) => {
     Projects.createResource(req.body) 
-        .then((ids) => {
-            res.status(201).json({ id: ids[0] })
+        .then((resource) => {
+            res.status(201).json(resource);
         })
         .catch((error) => {
             console.error(error.message);

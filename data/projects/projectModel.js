@@ -2,6 +2,7 @@ const db = require('../db-config');
 
 module.exports = {
     getProjects,
+    getProjectById,
     createProject,
     getResources,
     createResource,
@@ -12,6 +13,12 @@ module.exports = {
 //PROJECTS
 function getProjects() {
     return db('projects');
+};
+
+function getProjectById(id) {
+    return db('projects')
+    .where({ id })
+    .first()
 };
 
 function createProject(newProject) {
@@ -30,11 +37,12 @@ function createResource(newResources){
         .insert(newResources);
 };
 
+
 //TASKS
 function getTasks(id) {
     return db('tasks')
     .join('projects', 'tasks.project_id', 'projects.id')
-    .select('tasks.id', 'tasks.description', 'tasks.notes', 'tasks.completed', 'projects.name as project_name')
+    .select('tasks.id', 'tasks.description', 'tasks.notes', 'tasks.completed', 'projects.name as project_name', 'projects.description as project_description')
 };
 
 function addTasks(newTask) {
