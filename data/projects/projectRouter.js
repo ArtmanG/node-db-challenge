@@ -66,7 +66,7 @@ router.get('/:id/tasks', (req, res) => {
 
 router.post('/:id/tasks', (req, res) => {
     const { id } = req.params
-    Projects.addTasks(req.body, id)
+    Projects.addTask(req.body, id)
     .then(task => {
         res.status(201).json(task)
     })
